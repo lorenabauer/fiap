@@ -1,0 +1,26 @@
+import requests
+
+dia = input("Digite o Dia: ")
+mes = input("Digite o Mes: ")
+ano = input("Digite o Ano: ")
+
+
+
+
+url = f"https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date={ano}-{mes}-{dia}&camera=rhaz&api_key=pRMaHvbgbie6oyPkZI4lscSrF7U4mreq9XncCYKG"
+response = requests.get(url)
+
+if response.status_code == 200:
+    json_data = response.json()
+    if "photos" in json_data:
+
+      photo_urls = [photo["img_src"] for photo in json_data["photos"]]
+      for url in photo_urls:
+            print(url)
+      else:
+        print("No photos found in the JSON response.")
+else:
+    print("Failed to retrieve data from the API:", response.status_code)
+
+
+
